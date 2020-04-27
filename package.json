@@ -1,0 +1,16 @@
+{
+  "name": "sports-app2",
+  "version": "1.0.0",
+  "description": "Sports application to view sport events nearby and join one",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node server.js"
+  },
+  "author": "Balahari",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.10"
+  }
+}
