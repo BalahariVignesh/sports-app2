@@ -5,6 +5,9 @@ const mongoose = require("mongoose");
 // user API
 const users = require('./routes/api/user');
 
+// events api
+const events = require('./routes/api/events');
+
 const app = express();
 
 app.use(express.json());
@@ -25,7 +28,7 @@ mongoose
 
 
   app.use('/api/user', users);
-
+  app.use('/api/events', events);
 
   const port = 6000;
   app.listen(port, () => console.log(`Server running on port ${port}`));
