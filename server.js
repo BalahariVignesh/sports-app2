@@ -1,6 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
+
+// user API
+const users = require('./routes/api/User');
+
 const app = express();
 
 app.use(express.json());
@@ -18,3 +22,10 @@ mongoose
   )
   .then(() => console.log("MongoDB successfully connected"))
   .catch(err => console.log(err));
+
+
+  app.use('/api/User', users);
+
+
+  const port = 6000;
+  app.listen(port, () => console.log(`Server running on port ${port}`));
