@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 
 // user API
-const users = require('./routes/api/User');
+const users = require('./routes/api/user');
 
 const app = express();
 
@@ -24,7 +24,7 @@ mongoose
   .catch(err => console.log(err));
 
 
-  app.use('/api/User', users);
+  app.use('/api/user', users);
 
 
   const port = 6000;
