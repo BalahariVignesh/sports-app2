@@ -1,20 +1,20 @@
 const express = require('express');
 const router = express.Router();
-
+const passport = require('passport');
 
 
 const validateGameEvent = require('../../validation/event');
 
 const GameEvent = require('../../models/GameEvent');
 
-// create an event
-router.post('/',(req, res) => {
+// create a new event
+router.post('/', passport.authenticate('jwt', {session: false}),(req, res) => {
     const {errors, isValid} = validateGameEvent(req.body);
     
     if(!isValid){
         return res.status(400).json(errors);
     }
-    
+     
     const eventFields = {};
     eventFields.user = req.user.id;
     
@@ -28,5 +28,6 @@ router.post('/',(req, res) => {
     
     new GameEvent(eventFields).save().then(event => res.json(event));
 });
+
 
 module.exports = router;
