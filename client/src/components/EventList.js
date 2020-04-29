@@ -25,18 +25,7 @@ class EventList extends Component{
         const { items } = this.props.item;
         return(
             <Container>
-                <Button
-                    color="dark"
-                    style={{marginBottom: '2rem'}}
-                    onClick={()=>{
-                        const name = prompt('Enter item');
-                        if(name){
-                            this.setState(state=> ({
-                                items: [...state.items, {id:uuid(), event_name: name}]
-                            }))
-                        }
-                    }}
-                > Add new Event</Button>
+               
                 <ListGroup>
                     <TransitionGroup className="event-list">
                         {items.map(({id, event_name,sport_type,players_required,venue,additional_info,imageURL,start}) =>

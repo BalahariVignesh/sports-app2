@@ -1,5 +1,5 @@
 import uuid from 'react-uuid';
-import {GET_EVENTS, DELETE_EVENT} from '../actions/types';
+import {GET_EVENTS, DELETE_EVENT, ADD_EVENT} from '../actions/types';
 const initialState = {
     items: [
         {id: uuid(), 
@@ -58,6 +58,11 @@ export default function(state= initialState, action){
                 ...state,
                 items: state.items.filter(item => item.id !== action.payload)
             };
+        case ADD_EVENT:
+            return{
+                ...state,
+                items: [action.payload, ...state.items]
+            }
         default:
             return state;
     }
