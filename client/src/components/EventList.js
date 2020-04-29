@@ -4,7 +4,7 @@ import {CSSTransition, TransitionGroup } from 'react-transition-group';
 import uuid from 'react-uuid';
 
 import {connect} from 'react-redux';
-import {getEvents} from '../actions/eventAction';
+import {getEvents, deleteEvent} from '../actions/eventAction';
 
 import PropTypes from 'prop-types';
 
@@ -12,6 +12,11 @@ import PropTypes from 'prop-types';
 class EventList extends Component{
     componentDidMount(){
         this.props.getEvents();
+    }
+
+    onDeleteClick = (id) =>{
+        this.props.deleteEvent(id);
+
     }
 
 
@@ -52,18 +57,19 @@ class EventList extends Component{
                                     <br/>
                                     {start}
                                     <br/>
-                                    
                                     <Button 
                                     className="join-btn" 
                                     color ="danger" 
                                     
-                                    onClick={()=> {
-                                        this.setState(()=> ({
-                                            items: this.state.items.filter(item => item.id !== id)
-                                        }));
-                                    }
+                                    onClick={this.onDeleteClick.bind(this,id)}
+                                    > Delete</Button>
+                                    <Button 
+                                    className="join-btn" 
+                                    color ="danger" 
+                                    
+                                   
 
-                                    }
+                                    
                                     > Join</Button>
                                 </ListGroupItem>
 
@@ -85,4 +91,7 @@ const mapStateToProps = (state) => ({
     item: state.item
 })
 
-export default connect(mapStateToProps,{getEvents})(EventList);
+export default connect(
+    mapStateToProps,
+    {getEvents, deleteEvent})
+    (EventList);

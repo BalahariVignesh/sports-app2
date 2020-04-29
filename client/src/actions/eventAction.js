@@ -1,4 +1,4 @@
-import {GET_EVENTS} from './types';
+import {GET_EVENTS, DELETE_EVENT} from './types';
 
 export const getEvents = () =>{
     return{
@@ -6,3 +6,10 @@ export const getEvents = () =>{
         
     };
 };
+
+export const deleteEvent = id =>{
+    return {
+        type:DELETE_EVENT,
+        payload: id
+    }
+}
