@@ -1,37 +1,8 @@
 import uuid from 'react-uuid';
-import {GET_EVENTS, DELETE_EVENT, ADD_EVENT} from '../actions/types';
+import {GET_EVENTS, DELETE_EVENT, ADD_EVENT, EVENTS_LOADING} from '../actions/types';
 const initialState = {
     items: [
-        {id: uuid(), 
-            event_name:'TT',
-            sport_type:'Table Tennis',
-            players_required: 3,
-            venue:'SRH',
-            additional_info:'Blah blah blah',
-            imageURL:'tada',
-            start:'start'
         
-        },
-        {   id: uuid(), 
-            event_name:'TT',
-            sport_type:'Table Tennis',
-            players_required: 3,
-            venue:'SRH',
-            additional_info:'Blah blah blah',
-            imageURL:'tada',
-            start:'start'
-        
-        },
-        {   id: uuid(), 
-            event_name:'TT',
-            sport_type:'Table Tennis',
-            players_required: 3,
-            venue:'SRH',
-            additional_info:'Blah blah blah',
-            imageURL:'tada',
-            start:'start'
-        
-        },
         {   id: uuid(), 
             event_name:'TT',
             sport_type:'Table Tennis',
@@ -44,7 +15,8 @@ const initialState = {
         }
      
 
-    ]
+    ],
+    loading: false
 }
 
 export default function(state= initialState, action){
@@ -62,7 +34,12 @@ export default function(state= initialState, action){
             return{
                 ...state,
                 items: [action.payload, ...state.items]
-            }
+            };
+        case EVENTS_LOADING:
+            return {
+                ...state,
+                loading: true
+            };
         default:
             return state;
     }

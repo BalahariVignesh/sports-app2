@@ -1,14 +1,34 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
+const auth = require('../../middleware/auth')
 
 
 const validateGameEvent = require('../../validation/event');
 
 const GameEvent = require('../../models/GameEvent');
 
+// @route   GET api/events
+// @desc    Get All events
+// @access  public
+// fetch all events
+router.get('/',auth, (req, res) => {
+    Event.find()
+        
+        //.populate('user', ['name'])
+        .then(events => {
+            res.json(events);
+        })
+        .catch(err => 
+            res.status(404).json({error: "Error in get api/events/all. " + err})
+        );
+});
+
+// @route   POST api/events
+// @desc    Create an event
+// @access  private
+
 // create a new event
-router.post('/', passport.authenticate('jwt', {session: false}),(req, res) => {
+router.post('/',auth ,(req, res) => {
     const {errors, isValid} = validateGameEvent(req.body);
     
     if(!isValid){
@@ -28,6 +48,7 @@ router.post('/', passport.authenticate('jwt', {session: false}),(req, res) => {
     
     new GameEvent(eventFields).save().then(event => res.json(event));
 });
+
 
 
 module.exports = router;

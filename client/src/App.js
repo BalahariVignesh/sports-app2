@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import AppNavBar from './components/AppNavBar';
 import EventList from './components/EventList';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -11,23 +11,32 @@ import {Container} from 'reactstrap';
 import { Provider } from 'react-redux';
 import store from './store';
 
-function App() {
-  return (
-    <Provider store ={store} >
-    
-      <div className="App">
-        <header className="App-header">
-          <AppNavBar/>
-          <Container>
-            <EventModal/>
-            <EventList/>
-          </Container>
-         
+import {loadUser} from'./actions/authActions';
+
+class App extends Component {
+  componentDidMount(){
+    store.dispatch(loadUser());
+
+  }
+  render(){
+    return (
+      <Provider store ={store} >
       
-        </header>
-      </div>
-    </Provider>
-  );
+        <div className="App">
+          <header className="App-header">
+            <AppNavBar/>
+            <Container>
+              <EventModal/>
+              <EventList/>
+            </Container>
+           
+        
+          </header>
+        </div>
+      </Provider>
+    );
+  }
+  
 }
 
 export default App;

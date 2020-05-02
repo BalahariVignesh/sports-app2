@@ -1,7 +1,7 @@
 import React, {Component} from'react';
 import {Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import {CSSTransition, TransitionGroup } from 'react-transition-group';
-import uuid from 'react-uuid';
+
 
 import {connect} from 'react-redux';
 import {getEvents, deleteEvent} from '../actions/eventAction';
@@ -28,8 +28,8 @@ class EventList extends Component{
                
                 <ListGroup>
                     <TransitionGroup className="event-list">
-                        {items.map(({id, event_name,sport_type,players_required,venue,additional_info,imageURL,start}) =>
-                            <CSSTransition key={id} timeout={500} classNames="fade">
+                        {items.map(({_id, event_name,sport_type,players_required,venue,additional_info,imageURL,start}) =>
+                            <CSSTransition key={_id} timeout={500} classNames="fade">
                                                             
                                 <ListGroupItem>
                                     {event_name}
@@ -50,7 +50,7 @@ class EventList extends Component{
                                     className="join-btn" 
                                     color ="danger" 
                                     
-                                    onClick={this.onDeleteClick.bind(this,id)}
+                                    onClick={this.onDeleteClick.bind(this,_id)}
                                     > Delete</Button>
                                     <Button 
                                     className="join-btn" 

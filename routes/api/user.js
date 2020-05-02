@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-
+const config = require('config');
 //password hashing
 const bcrypt = require('bcryptjs');
 
 //jwt webtoken
 const jwt = require('jsonwebtoken');
 //key for webtoken json sign
-const keys = require('../../config/keys');
+
 
 
 const validateSignup = require('../../validation/register');
@@ -16,14 +16,25 @@ const validateSignIn = require('../../validation/sign-in');
 
 const User = require('../../models/User');
 
+// @route   GET api/users
+// @desc    Register new user
+// @access  public
 
-//Register or Sign up a new user
-router.post('/sign-up', (req, res) => {
-    const {errors, isValid} = validateSignup(req.body);
+router.get('/', (req, res) =>{
+    res.send('register');
+ });
+ 
+
+// @route   POST api/users
+// @desc    Register new user
+// @access  public
+
+ router.post('/sign-up', (req, res) => {
+     const {errors, isValid} = validateSignup(req.body);
     
-    if(!isValid){
-        return res.status(400).json(errors);
-    }
+     if(!isValid){
+         return res.status(400).json(errors);
+     }
     
     User.findOne({ email: req.body.email })
         .then(user => {
@@ -46,7 +57,25 @@ router.post('/sign-up', (req, res) => {
                         newUser.password = hash;
                         newUser
                             .save()
-                            .then(user => res.json(user))
+                            .then(user => {
+                                jwt.sign(
+                                    {id: user.id},
+                                    config.get('secretOrKey'),
+                                    {expiresIn:3600},
+                                    (err, token) => {
+                                        if(err) throw err;
+                                        res.json({
+                                            token,
+                                            user:{
+                                                id: user.id,
+                                                name: user.name,
+                                                email: user.email
+                                            }
+                                        })
+                                    }
+                                )
+                                //
+                            })
                             .catch(err => console.log(err));
                     });
                 });

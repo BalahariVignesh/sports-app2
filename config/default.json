@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://bala:test123@cluster0-q7cuh.mongodb.net/sports-app2?retryWrites=true&w=majority",
+    "secretOrKey" : "GameOn"
+}

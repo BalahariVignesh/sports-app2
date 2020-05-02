@@ -7,14 +7,13 @@ import {
     Nav,
     NavItem,
     NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    NavbarText,
+ 
     Container,
     Button
 } from 'reactstrap';
+import RegisterModal from './auth/RegisterModal';
+import Logout from './auth/Logout';
+import LoginModal from './auth/LoginModal';
 
 class AppNavBar extends Component {
     state = {
@@ -36,7 +35,7 @@ class AppNavBar extends Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                              <NavLink href="https://github.com/rishipr/mern-auth">Github</NavLink>
+                                <RegisterModal />
                             </NavItem>
                             <NavItem>
                                 <NavLink > Events</NavLink>
@@ -48,11 +47,15 @@ class AppNavBar extends Component {
                                 <NavLink > Contact us!</NavLink>
                             </NavItem>
                             <NavItem>
-                                <Button color="primary">Sign In</Button> &nbsp;&nbsp;
+
+                                <Button color="primary"><LoginModal/></Button> &nbsp;&nbsp;
                             </NavItem>
                             <br/>
                             <NavItem>
-                                <Button color="danger">Sign Up</Button>
+                                <Button color="danger"><RegisterModal /></Button>
+                            </NavItem>
+                            <NavItem>
+                                <Logout/>
                             </NavItem>
                         </Nav>
                     </Collapse>

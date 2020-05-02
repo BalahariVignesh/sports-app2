@@ -1,25 +1,22 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
+const config = require('config');
 
-// user API
-const users = require('./routes/api/user');
-
-// events api
-const events = require('./routes/api/events');
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-const db = require("./config/keys").mongoURI;
+const db = config.get('mongoURI');
 
 mongoose
   .connect(
     db,
     { 
         useNewUrlParser: true,
+        useCreateIndex: true,
         useUnifiedTopology: true
      }
   )
@@ -27,8 +24,9 @@ mongoose
   .catch(err => console.log(err));
 
 
-  app.use('/api/user', users);
-  app.use('/api/events', events);
+  app.use('/api/user', require('./routes/api/user'));
+  app.use('/api/events', require('./routes/api/events'));
+  app.use('/api/auth', require('./routes/api/auth'));
 
   const port = 6000;
   app.listen(port, () => console.log(`Server running on port ${port}`));
