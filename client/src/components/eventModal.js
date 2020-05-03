@@ -45,7 +45,7 @@ class EventModal extends Component{
         e.preventDefault();
 
         const newEvent = {
-            id: uuid(),
+            //id: uuid(),
             event_name: this.state.event_name,
             sport_type: this.state.sport_type,
             players_required: this.state.players_required,
@@ -140,7 +140,7 @@ class EventModal extends Component{
                                 </Input>
                                 <Label for="item">Start date:</Label>
                                 <Input
-                                    type="text"
+                                    type="date"
                                     name="start"
                                     id="item"
                                     placeholder="Start date/time"

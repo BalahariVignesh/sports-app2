@@ -14,7 +14,7 @@ const GameEvent = require('../../models/GameEvent');
 router.get('/',auth, (req, res) => {
     Event.find()
         
-        //.populate('user', ['name'])
+        .populate('user', ['name'])
         .then(events => {
             res.json(events);
         })
@@ -37,7 +37,7 @@ router.post('/',auth ,(req, res) => {
      
     const eventFields = {};
     eventFields.user = req.user.id;
-    
+    console.log(`user id is ${req.user.id}`);
     if(req.body.event_name) eventFields.event_name = req.body.event_name;
     if(req.body.sport_type) eventFields.sport_type = req.body.sport_type;
     if(req.body.players_required) eventFields.players_required = req.body.players_required;
