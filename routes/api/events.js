@@ -14,8 +14,9 @@ const GameEvent = require('../../models/GameEvent');
 router.get('/',auth, (req, res) => {
     Event.find()
         
-        .populate('user', ['name'])
+        //.populate('user', ['name'])
         .then(events => {
+            
             res.json(events);
         })
         .catch(err => 
@@ -46,9 +47,68 @@ router.post('/',auth ,(req, res) => {
     if(req.body.imageURL) eventFields.imageURL = req.body.imageURL;
     if(req.body.start) eventFields.start = req.body.start;
     
-    new GameEvent(eventFields).save().then(event => res.json(event));
+    new GameEvent(eventFields).save()
+    .then(event => res.status(200).json(event));
 });
 
+// @route   PUT api/events/:id/
+// @desc    find an event by Id
+// @access  public
 
+
+router.get('/:id', (req, res) => {
+    Event.findById(req.params.id)
+        .populate('user', ['name'])
+        .then(event => res.json(event))
+        .catch(err =>
+            res.status(404).json({error: "Error in get api/events/:id. " + err})
+        );
+});
+
+// @route   PUT api/events/:id/join
+// @desc    Join an event
+// @access  private
+
+router.put('/:id/join', auth, (req, res) => {
+   
+    Event.findById(req.params.id)
+        //.populate('user', ['name'])
+        .then(event => {
+            if(!event){
+                return res.status(404).json({error: 'This event is not found'});
+            }
+            
+            let count = 0;
+            
+            for(let i of event.players_list){
+                if(i["id"] === req.user.id){
+                    return res.status(400).json({alreadyJoin: 'You already join this event'});
+                }
+                count++;
+            }
+            
+            if(count >= event.players_required){
+                return res.status(400).json({error: 'This event is full'});
+            }
+            
+            const userName = req.user.name;
+            
+            const newPlayer = {
+                id: req.user.id,
+                name: userName
+            };
+            
+            event.player_list.push(newPlayer);
+            return event.save();
+        })
+        .then(result => {
+           
+            res.status(200).json({
+                msg: 'Success on joining that event',
+                event: result
+            });
+        })
+        .catch(err => res.status(404).json({error: "Error in put api/events/:id/join. " + err}));
+});
 
 module.exports = router;

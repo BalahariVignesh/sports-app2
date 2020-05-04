@@ -1,18 +1,34 @@
-import {GET_EVENTS, DELETE_EVENT, ADD_EVENT, EVENTS_LOADING} from './types';
+import {GET_EVENTS, DELETE_EVENT, ADD_EVENT, EVENTS_LOADING, GET_EVENT, JOIN_EVENT} from './types';
 import axios from 'axios';
 
 import {tokenConfig} from './authActions';
 import {returnErrors} from './errorActions';
 
-export const getEvents = () => dispatch => {
+export const getEvents = () => (dispatch,getState) => {
     dispatch(setEventsLoading());
+   
     axios
-        .get('/api/events/all')
+        .get('/api/events',tokenConfig(getState))
         .then(res=>
             dispatch({
                 type:GET_EVENTS,
                 payload:res.data
             }))
+        .catch(err => dispatch(returnErrors(err.response.data, err.response.status))
+            );
+};
+
+export const getEvent = (id) => (dispatch,getState) => {
+    dispatch(setEventsLoading());
+ 
+    axios
+        .get(`/api/events/${id}`, tokenConfig(getState))
+        .then(res => 
+            dispatch({
+                type: GET_EVENT,
+                payload: res.data
+            })
+        )
         .catch(err => dispatch(returnErrors(err.response.data, err.response.status))
             );
 };
@@ -26,6 +42,21 @@ export const addEvent = item => (dispatch,getState) => {
                 payload: res.data
             }))
         .catch(err => dispatch(returnErrors(err.response.data, err.response.status))
+            );
+};
+
+export const joinEvent = event => (dispatch, getState) =>{
+    console.log(event);
+    axios
+
+        .put(`/api/events/${event.id}/join`,event,tokenConfig(getState))
+        .then(res=>
+            dispatch({
+                type: JOIN_EVENT,
+                payload: res.data.event,
+           
+            }))
+            .catch(err => dispatch(returnErrors(err.response.data, err.response.status))
             );
 };
 

@@ -16,7 +16,7 @@ import {addEvent} from '../actions/eventAction';
 
 //import PropTypes from 'prop-types';
 
-import uuid from 'react-uuid';
+
 
 class EventModal extends Component{
     state = {
@@ -59,7 +59,7 @@ class EventModal extends Component{
 
         //add item via additem action
         this.props.addEvent(newEvent);
-        console.log(newEvent);
+       
         this.toggle();//closing modal
     }
     render(){
@@ -74,7 +74,7 @@ class EventModal extends Component{
                     isOpen={this.state.modal}
                     toggle = {this.toggle}
                 >
-                    <ModalHeader toggle={this.toggle}> Add to shopping list</ModalHeader>
+                    <ModalHeader toggle={this.toggle}> Create a new event</ModalHeader>
                     <ModalBody>
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup>

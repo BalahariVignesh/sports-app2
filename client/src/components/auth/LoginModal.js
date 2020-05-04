@@ -74,6 +74,7 @@ class LoginModal extends Component{
         }
         //login attempt
         this.props.login(user);
+        
 
  
     };

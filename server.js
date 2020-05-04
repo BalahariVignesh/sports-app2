@@ -1,11 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require('path');
 
 const config = require('config');
 
 
 const app = express();
 
+app.use(express.static(path.join(__dirname,'client','build')));
+app.get('/', (req,resp) => {
+   console.log('hellow orld!');
+  resp.sendFile(path.join(__dirname,'client','build','index.html'));
+});
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
@@ -24,9 +30,13 @@ mongoose
   .catch(err => console.log(err));
 
 
+  //app.get('*', (req,resp) => {
+    //console.log('hellow orld!');
+    //resp.sendFile(__dirname+'/index.html');
+  //})  
   app.use('/api/user', require('./routes/api/user'));
   app.use('/api/events', require('./routes/api/events'));
   app.use('/api/auth', require('./routes/api/auth'));
 
-  const port = 6000;
+  const port = 8080;
   app.listen(port, () => console.log(`Server running on port ${port}`));

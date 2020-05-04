@@ -4,13 +4,13 @@ import {CSSTransition, TransitionGroup } from 'react-transition-group';
 
 
 import {connect} from 'react-redux';
-import {getEvents, deleteEvent} from '../actions/eventAction';
-
+import {getEvents, deleteEvent, joinEvent} from '../actions/eventAction';
 import PropTypes from 'prop-types';
 
 
 class EventList extends Component{
     componentDidMount(){
+        //store.dispatch(loadUser());
         this.props.getEvents();
     }
 
@@ -18,17 +18,24 @@ class EventList extends Component{
         this.props.deleteEvent(id);
 
     }
+    onJoinClick = (id) =>{
+        const event = {
+            id: id
+        }
+        this.props.joinEvent(event);
+    }
 
 
     render() {
 
         const { items } = this.props.item;
+       
         return(
             <Container>
                
                 <ListGroup>
                     <TransitionGroup className="event-list">
-                        {items.map(({_id, event_name,sport_type,players_required,venue,additional_info,imageURL,start}) =>
+                        {items && items.map(({_id, event_name,sport_type,players_required,venue,additional_info,imageURL,start}) =>
                             <CSSTransition key={_id} timeout={500} classNames="fade">
                                                             
                                 <ListGroupItem>
@@ -55,10 +62,7 @@ class EventList extends Component{
                                     <Button 
                                     className="join-btn" 
                                     color ="danger" 
-                                    
-                                   
-
-                                    
+                                    onClick={this.onJoinClick.bind(this,_id)}
                                     > Join</Button>
                                 </ListGroupItem>
 
@@ -77,10 +81,12 @@ EventList.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-    item: state.item
+    item: state.item,
+    event: state.event, 
+    auth: state.auth
 })
 
 export default connect(
     mapStateToProps,
-    {getEvents, deleteEvent})
+    {getEvents, deleteEvent, joinEvent})
     (EventList);
