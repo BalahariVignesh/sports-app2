@@ -3,7 +3,8 @@ import {GET_EVENTS, DELETE_EVENT, ADD_EVENT, EVENTS_LOADING, GET_EVENT, JOIN_EVE
 const initialState = {
     items: [],
     event:[],
-    loading: false
+    loading: false,
+    user:localStorage.getItem('user')
 }
 
 export default function(state= initialState, action){
@@ -17,7 +18,9 @@ export default function(state= initialState, action){
         case GET_EVENT:
             return{
                 ...state,
-                event: action.payload.event
+                event: action.payload,
+                items: [...state.items],
+                
                 
             }
         case DELETE_EVENT:

@@ -9,18 +9,28 @@ import PropTypes from 'prop-types';
 
 
 class EventList extends Component{
+
     componentDidMount(){
         //store.dispatch(loadUser());
         this.props.getEvents();
+       
     }
 
     onDeleteClick = (id) =>{
         this.props.deleteEvent(id);
 
     }
+      
     onJoinClick = (id) =>{
+        console.log('join cicked', id);
+        let user = JSON.parse(localStorage.getItem('user'));
+        console.log(user);
         const event = {
-            id: id
+            id: id,
+            user_id: user.id,
+            user_name: user.name,
+               //user_id:this.state.user.id,
+               //user_name:this.state.user.name
         }
         this.props.joinEvent(event);
     }
@@ -83,7 +93,8 @@ EventList.propTypes = {
 const mapStateToProps = (state) => ({
     item: state.item,
     event: state.event, 
-    auth: state.auth
+    auth: state.auth,
+    user: state.auth.user
 })
 
 export default connect(

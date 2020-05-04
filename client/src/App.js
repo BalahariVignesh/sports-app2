@@ -16,7 +16,7 @@ import {loadUser} from'./actions/authActions';
 class App extends Component {
   componentDidMount(){
     store.dispatch(loadUser());
-
+    
   }
   render(){
     return (
