@@ -28,10 +28,10 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}} 
       run: |
         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    - name: docker build
+    - name: docker build . -t balahari/sportify:latest
       run: |
         docker build .
     - name : docker push
       run: |
-        docker push balahari/sportify
+        docker push balahari/sportify:latest
    
