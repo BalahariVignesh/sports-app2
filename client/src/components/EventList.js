@@ -1,5 +1,5 @@
 import React, {Component} from'react';
-import {Container, ListGroup, ListGroupItem, Button, Alert } from 'reactstrap';
+import {Container, ListGroup, ListGroupItem, Button, Alert, Toast } from 'reactstrap';
 import {CSSTransition, TransitionGroup } from 'react-transition-group';
 
 
@@ -9,10 +9,15 @@ import PropTypes from 'prop-types';
 
 import {clearErrors} from '../actions/errorActions';
 
+import EventItem from './EventItem';
+
 class EventList extends Component{
     state = {
         msg:null,
-        event:null
+        event:{
+            _id:null,
+            event_name:null
+        }
     }
     componentDidMount(){
         //store.dispatch(loadUser());
@@ -28,6 +33,7 @@ class EventList extends Component{
       
     onJoinClick = (id) =>{
         console.log('join cicked', id);
+        Toast.success('Joined');
         let user = JSON.parse(localStorage.getItem('user'));
         console.log(user);
         const event = {
@@ -49,19 +55,13 @@ class EventList extends Component{
             //check for join event error
             if(error.id === 'JOIN_FAIL'){
                 this.setState({msg:error.msg.msg,
-                event:error.msg.event.event_name});
+                //event:error.msg.event.event_name
+            });
             }else{
-                this.setState({msg:null,event:null})
+                this.setState({msg:null  ,event:null})
             }
         }
-        // //if authenticated then close the modal
-        // if(this.state.modal){
-        //     if(isAuthenticated){
-        //         this.toggle();
-        //     }
-        // }
-      
-    }
+     }
 
     render() {
 
@@ -71,44 +71,8 @@ class EventList extends Component{
             <Container>
                
                 <ListGroup>
-                {this.state.msg? (<Alert color='danger'>{this.state.msg} {this.state.event}</Alert>):null}
-                    <TransitionGroup className="event-list">
-                        {items && items.map(({_id, event_name,sport_type,players_required,venue,additional_info,imageURL,start}) =>
-                            <CSSTransition key={_id} timeout={500} classNames="fade">
-                                                            
-                                <ListGroupItem>
-                                    {event_name}
-                                    <br/>
-                                    {sport_type}
-                                    <br/>
-                                    {players_required}
-                                    <br/>
-                                    {venue}
-                                    <br/>
-                                    {additional_info}
-                                    <br/>
-                                    {imageURL}
-                                    <br/>
-                                    {start}
-                                    <br/>
-                                    <Button 
-                                    className="join-btn" 
-                                    color ="danger" 
-                                    
-                                    onClick={this.onDeleteClick.bind(this,_id)}
-                                    > Delete</Button>
-                                    <Button 
-                                    className="join-btn" 
-                                    color ="danger" 
-                                    onClick={this.onJoinClick.bind(this,_id)}
-                                    > Join</Button>
-                                    
-                                    
-                                </ListGroupItem>
-
-                            </CSSTransition>
-                        )}
-                    </TransitionGroup>
+               
+                   <EventItem items= {items}/>
                 </ListGroup>
             </Container>
         );

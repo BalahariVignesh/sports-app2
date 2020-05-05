@@ -16,7 +16,7 @@ export const getEvents = () => (dispatch,getState) => {
             }))
         .catch(err => {
             
-            dispatch(returnErrors(err.response.data, err.response.status,'JOIN_FAIL'));
+            dispatch(returnErrors(err.response.data, err.response.status));
             console.log(err);
         }
             );
