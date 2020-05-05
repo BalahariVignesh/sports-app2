@@ -75,30 +75,31 @@ router.put('/:id/join', auth, (req, res) => {
         //.populate('user', ['name'])
         .then(event => {
             if(!event){
-                return res.status(404).json({error: 'This event is not found'});
+                return res.status(404).json({msg: 'This event is no longer available:',
+            event:event});
             }
             
             let count = 0;
             
             for(let i of event.players_list){
                 if(i["id"] === req.user.id){
-                    return res.status(400).json({alreadyJoin: 'You already join this event'});
+                    return res.status(400).json({msg: 'You already joined this event:', event:event});
                 }
                 count++;
             }
             
             if(count >= event.players_required){
-                return res.status(400).json({error: 'This event is full'});
+                return res.status(400).json({msg: 'This event is currently full:', event:event});
             }
             
-            const userName = req.user.name;
+            const userName = req.body.user_name;
             
             const newPlayer = {
-                id: req.user.id,
+                id: req.body.user_id,
                 name: userName
             };
-            
-            event.player_list.push(newPlayer);
+            console.log(newPlayer);
+            event.players_list.push(newPlayer);
             return event.save();
         })
         .then(result => {

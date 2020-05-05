@@ -14,7 +14,11 @@ export const getEvents = () => (dispatch,getState) => {
                 type:GET_EVENTS,
                 payload:res.data
             }))
-        .catch(err => dispatch(returnErrors(err.response.data, err.response.status))
+        .catch(err => {
+            
+            dispatch(returnErrors(err.response.data, err.response.status,'JOIN_FAIL'));
+            console.log(err);
+        }
             );
 };
 
@@ -56,7 +60,7 @@ export const joinEvent = event => (dispatch, getState) =>{
                 payload: res.data.event,
            
             }))
-            .catch(err => dispatch(returnErrors(err.response.data, err.response.status))
+            .catch(err => dispatch(returnErrors(err.response.data, err.response.status,'JOIN_FAIL'))
             );
 };
 

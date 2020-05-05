@@ -1,5 +1,5 @@
 import React, {Component} from'react';
-import {Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
+import {Container, ListGroup, ListGroupItem, Button, Alert } from 'reactstrap';
 import {CSSTransition, TransitionGroup } from 'react-transition-group';
 
 
@@ -7,12 +7,17 @@ import {connect} from 'react-redux';
 import {getEvents, deleteEvent, joinEvent} from '../actions/eventAction';
 import PropTypes from 'prop-types';
 
+import {clearErrors} from '../actions/errorActions';
 
 class EventList extends Component{
-
+    state = {
+        msg:null,
+        event:null
+    }
     componentDidMount(){
         //store.dispatch(loadUser());
         this.props.getEvents();
+        this.props.clearErrors();
        
     }
 
@@ -29,12 +34,34 @@ class EventList extends Component{
             id: id,
             user_id: user.id,
             user_name: user.name,
-               //user_id:this.state.user.id,
-               //user_name:this.state.user.name
-        }
+            }
         this.props.joinEvent(event);
     }
-
+    static propTypes ={
+        //isAuthenticated:PropTypes.bool,
+        error:PropTypes.object.isRequired,
+        //login: PropTypes.func.isRequired,
+        clearErrors: PropTypes.func.isRequired
+    }
+    componentDidUpdate(prevProps){
+        const {error} = this.props;
+        if(error != prevProps.error){
+            //check for join event error
+            if(error.id === 'JOIN_FAIL'){
+                this.setState({msg:error.msg.msg,
+                event:error.msg.event.event_name});
+            }else{
+                this.setState({msg:null,event:null})
+            }
+        }
+        // //if authenticated then close the modal
+        // if(this.state.modal){
+        //     if(isAuthenticated){
+        //         this.toggle();
+        //     }
+        // }
+      
+    }
 
     render() {
 
@@ -44,6 +71,7 @@ class EventList extends Component{
             <Container>
                
                 <ListGroup>
+                {this.state.msg? (<Alert color='danger'>{this.state.msg} {this.state.event}</Alert>):null}
                     <TransitionGroup className="event-list">
                         {items && items.map(({_id, event_name,sport_type,players_required,venue,additional_info,imageURL,start}) =>
                             <CSSTransition key={_id} timeout={500} classNames="fade">
@@ -74,6 +102,8 @@ class EventList extends Component{
                                     color ="danger" 
                                     onClick={this.onJoinClick.bind(this,_id)}
                                     > Join</Button>
+                                    
+                                    
                                 </ListGroupItem>
 
                             </CSSTransition>
@@ -87,17 +117,19 @@ class EventList extends Component{
 
 EventList.propTypes = {
     getEvents: PropTypes.func.isRequired,
-    item: PropTypes.object.isRequired
+    item: PropTypes.object.isRequired,
+    clearErrors: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
     item: state.item,
     event: state.event, 
     auth: state.auth,
-    user: state.auth.user
+    user: state.auth.user,
+    error: state.error
 })
 
 export default connect(
     mapStateToProps,
-    {getEvents, deleteEvent, joinEvent})
+    {getEvents, deleteEvent, joinEvent,clearErrors})
     (EventList);

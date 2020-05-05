@@ -23,7 +23,7 @@ mongoose
     { 
         useNewUrlParser: true,
         useCreateIndex: true,
-        useUnifiedTopology: true
+        //useUnifiedTopology: true
      }
   )
   .then(() => console.log("MongoDB successfully connected"))
