@@ -46,7 +46,7 @@ class EventItem extends Component {
             }else if(error.id === 'DELETE_EVENT_FAIL'){
                 this.setState({msg:error.msg.msg,
                      event:{
-                         name: null}
+                         name: error.msg.event.event_name}
     
                 });
             }else{

@@ -83,7 +83,7 @@ router.put('/:id/join', auth, (req, res) => {
             
             for(let i of event.players_list){
                 if(i["id"] === req.user.id){
-                    return res.status(400).json({msg: 'You already joined this event:', event:event});
+                    return res.status(400).json({msg: 'You have already joined this event:', event:event});
                 }
                 count++;
             }
@@ -122,7 +122,7 @@ router.delete('/:id', auth, (req, res) => {
     Event.findById(req.params.id)
         .then(event => {
             if(event.user.toString() !== req.user.id){
-                return res.status(401).json({msg: 'User not authorized'});
+                return res.status(401).json({msg: 'You are not authorized to delete this event:',event:event});
             }
             event.remove().then(() => res.status(200).json({msg: true}));
         })
