@@ -43,8 +43,16 @@ class EventItem extends Component {
                     name: error.msg.event.event_name}
 
             });
+            }else if(error.id === 'DELETE_EVENT_FAIL'){
+                this.setState({msg:error.msg.msg,
+                     event:{
+                         name: null}
+    
+                });
             }else{
+                
                 this.setState({msg:null  ,event:null})
+                
             }
         }
      }
@@ -111,5 +119,5 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(
-    mapStateToProps,{clearErrors,joinEvent})
+    mapStateToProps,{clearErrors,joinEvent,deleteEvent})
     (EventItem);

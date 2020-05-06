@@ -112,4 +112,21 @@ router.put('/:id/join', auth, (req, res) => {
         .catch(err => res.status(404).json({error: "Error in put api/events/:id/join. " + err}));
 });
 
+
+// @route   DELETE api/events/:id/
+// @desc    delete an event
+// @access  private
+
+
+router.delete('/:id', auth, (req, res) => {
+    Event.findById(req.params.id)
+        .then(event => {
+            if(event.user.toString() !== req.user.id){
+                return res.status(401).json({msg: 'User not authorized'});
+            }
+            event.remove().then(() => res.status(200).json({msg: true}));
+        })
+        .catch(err => res.status(404).json({error: "Error in delete api/events/:id. " + err}));
+});
+
 module.exports = router;
