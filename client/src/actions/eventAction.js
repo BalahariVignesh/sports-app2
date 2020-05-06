@@ -62,6 +62,7 @@ export const joinEvent = event => (dispatch, getState) =>{
             dispatch({
                 type: JOIN_EVENT,
                 payload: res.data.event,
+                id: 'SUCCESS_JOIN'
            
             }))
             .catch(err => dispatch(returnErrors(err.response.data, err.response.status,'JOIN_FAIL'))
@@ -74,7 +75,8 @@ export const deleteEvent = id => (dispatch,getState) =>{
         .then(res =>
             dispatch({
                 type:DELETE_EVENT,
-                payload: id
+                payload: res.data.event,
+                id: 'SUCCESS_DELETE'
             })
         )
         .catch(err => dispatch(returnErrors(err.response.data, err.response.status,'DELETE_EVENT_FAIL'))

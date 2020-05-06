@@ -124,7 +124,7 @@ router.delete('/:id', auth, (req, res) => {
             if(event.user.toString() !== req.user.id){
                 return res.status(401).json({msg: 'You are not authorized to delete this event:',event:event});
             }
-            event.remove().then(() => res.status(200).json({msg: true}));
+            event.remove().then(() => res.status(200).json({msg: 'You have successfully deleted this event:',event:event}));
         })
         .catch(err => res.status(404).json({error: "Error in delete api/events/:id. " + err}));
 });

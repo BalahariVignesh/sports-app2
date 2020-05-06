@@ -49,22 +49,22 @@ class EventList extends Component{
         //login: PropTypes.func.isRequired,
         clearErrors: PropTypes.func.isRequired
     }
-    componentDidUpdate(prevProps){
+    // componentDidUpdate(prevProps){
        
-        const {error} = this.props;
-        if(error != prevProps.error){
-            //check for join event error
-            if(error.id === 'JOIN_FAIL'){
-                this.setState({msg:error.msg.msg,
-                event:{
-                    name: error.msg.event.event_name}
+    //     // const {error} = this.props;
+    //     // if(error != prevProps.error){
+    //     //     //check for join event error
+    //     //     if(error.id === 'JOIN_FAIL'){
+    //     //         this.setState({msg:error.msg.msg,
+    //     //         event:{
+    //     //             name: error.msg.event.event_name}
 
-            });
-            }else{
-                this.setState({msg:null  ,event:null})
-            }
-        }
-     }
+    //     //     });
+    //     //     }else{
+    //     //         this.setState({msg:null  ,event:null})
+    //     //     }
+    //     // }
+    //  }
 
     render() {
 

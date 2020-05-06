@@ -8,7 +8,9 @@ import {getEvents, deleteEvent, joinEvent} from '../actions/eventAction';
 import {clearErrors} from '../actions/errorActions';
 
 class EventItem extends Component {
-    
+    componentDidMount(){
+        this.props.getEvents();
+    }
     onDeleteClick = (id) =>{
         this.props.deleteEvent(id);
 
@@ -35,6 +37,7 @@ class EventItem extends Component {
     componentDidUpdate(prevProps){
         
         const {error} = this.props;
+        const{item} = this.props;
         if(error != prevProps.error){
             //check for join event error
             if(error.id === 'JOIN_FAIL'){
@@ -49,10 +52,26 @@ class EventItem extends Component {
                          name: error.msg.event.event_name}
     
                 });
-            }else{
+            }else if (item.event.id === 'SUCCESS_JOIN'){
+                
+                this.setState({msg:'You have successfully joined.'  ,event:{
+                    name: error.msg.event.event_name}})
+                
+            }
+            else{
                 
                 this.setState({msg:null  ,event:null})
                 
+            }
+        }
+        else if(item != prevProps.item){
+            if(item.id === 'SUCCESS_JOIN'){
+                this.setState({msg:'You have successfully joined the event:'  ,event:{
+                    name: item.event.event_name}})
+            }
+            else if(item.id === 'SUCCESS_DELETE'){
+                this.setState({msg:'You have successfully deleted the event:'  ,event:{
+                    name: item.event.event_name}})
             }
         }
      }
@@ -119,5 +138,5 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(
-    mapStateToProps,{clearErrors,joinEvent,deleteEvent})
+    mapStateToProps,{getEvents,clearErrors,joinEvent,deleteEvent})
     (EventItem);

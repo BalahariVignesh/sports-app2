@@ -5,7 +5,7 @@ const initialState = {
     event:[],
     loading: false,
     user:localStorage.getItem('user'),
-  
+    id:null
 }
 
 export default function(state= initialState, action){
@@ -17,7 +17,13 @@ export default function(state= initialState, action){
          
             };
         case JOIN_EVENT:
-            
+            return{
+                ...state,
+                event: action.payload,
+                
+                id:action.id
+                
+            }
         case GET_EVENT:
             return{
                 ...state,
@@ -29,7 +35,9 @@ export default function(state= initialState, action){
         case DELETE_EVENT:
             return{
                 ...state,
-                items: state.items.filter(item => item.id !== action.payload)
+                items: state.items.filter(item => item.id !== action.payload),
+                event: action.payload,
+                id: action.id
             };
         case ADD_EVENT:
             return{
