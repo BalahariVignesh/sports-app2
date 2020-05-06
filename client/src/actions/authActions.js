@@ -8,7 +8,8 @@ import {
     LOGIN_SUCCESS,
     LOGOUT_SUCCESS,
     REGISTER_FAIL,
-    REGISTER_SUCCESS
+    REGISTER_SUCCESS,
+    GET_EVENTS
 
 } from "./types"
 
@@ -41,10 +42,13 @@ export const register = ({ name, email, password, password2}) => dispatch => {
     //request body
     const body = JSON.stringify({name, email, password, password2});
     axios.post('/api/user/sign-up', body, config)
-        .then(res => dispatch({
+        .then(res => {
+            dispatch({
             type:REGISTER_SUCCESS,
             payload: res.data
-        }))
+            });
+            window.location.reload();
+        })
         .catch(err=>{
             dispatch(returnErrors(err.response.data, err.response.status,'REGISTER_FAIL'));
             dispatch({
@@ -66,10 +70,16 @@ export const login = ({ email, password}) => dispatch => {
     //request body
     const body = JSON.stringify({email, password});
     axios.post('/api/auth', body, config)
-        .then(res => dispatch({
+        .then(res => {
+            dispatch({
             type:LOGIN_SUCCESS,
             payload: res.data
-        }))
+        }); window.location.reload();
+       // dispatch({
+        //    type:GET_EVENTS,
+            //payload:res.data
+       // });
+    })
         .catch(err=>{
             dispatch(returnErrors(err.response.data, err.response.status,'LOGIN_FAIL'));
             dispatch({

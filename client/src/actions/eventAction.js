@@ -72,13 +72,15 @@ export const joinEvent = event => (dispatch, getState) =>{
 export const deleteEvent = id => (dispatch,getState) =>{
     axios
         .delete(`/api/events/${id}`, tokenConfig(getState))
-        .then(res =>
+        .then(res =>{
             dispatch({
                 type:DELETE_EVENT,
                 payload: res.data.event,
                 id: 'SUCCESS_DELETE'
             })
-        )
+            window.location.reload();
+        })
+            
         .catch(err => dispatch(returnErrors(err.response.data, err.response.status,'DELETE_EVENT_FAIL'))
         );
     

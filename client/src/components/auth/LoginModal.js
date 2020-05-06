@@ -17,7 +17,8 @@ import PropTypes from 'prop-types';
 
 import {login} from '../../actions/authActions';
 import {clearErrors} from '../../actions/errorActions';
-
+import {getEvents} from '../../actions/eventAction';
+import store from '../../store';
 class LoginModal extends Component{
     state = {
         modal:false,
@@ -47,7 +48,9 @@ class LoginModal extends Component{
         //if authenticated then close the modal
         if(this.state.modal){
             if(isAuthenticated){
+                //store.dispatch(getEvents());
                 this.toggle();
+                
             }
         }
       
@@ -74,7 +77,7 @@ class LoginModal extends Component{
         }
         //login attempt
         this.props.login(user);
-        
+       
 
  
     };
