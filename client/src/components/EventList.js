@@ -25,7 +25,7 @@ class EventList extends Component{
         this.props.clearErrors();
        
     }
-
+   
     onDeleteClick = (id) =>{
         this.props.deleteEvent(id);
 
@@ -50,12 +50,15 @@ class EventList extends Component{
         clearErrors: PropTypes.func.isRequired
     }
     componentDidUpdate(prevProps){
+       
         const {error} = this.props;
         if(error != prevProps.error){
             //check for join event error
             if(error.id === 'JOIN_FAIL'){
                 this.setState({msg:error.msg.msg,
-                //event:error.msg.event.event_name
+                event:{
+                    name: error.msg.event.event_name}
+
             });
             }else{
                 this.setState({msg:null  ,event:null})

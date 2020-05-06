@@ -9,11 +9,15 @@ export const getEvents = () => (dispatch,getState) => {
    
     axios
         .get('/api/events',tokenConfig(getState))
-        .then(res=>
+        .then(res=>{
             dispatch({
                 type:GET_EVENTS,
                 payload:res.data
-            }))
+            });
+           
+            
+        })
+            
         .catch(err => {
             
             dispatch(returnErrors(err.response.data, err.response.status));

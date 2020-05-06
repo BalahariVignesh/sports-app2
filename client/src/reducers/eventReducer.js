@@ -4,7 +4,8 @@ const initialState = {
     items: [],
     event:[],
     loading: false,
-    user:localStorage.getItem('user')
+    user:localStorage.getItem('user'),
+  
 }
 
 export default function(state= initialState, action){
@@ -12,9 +13,11 @@ export default function(state= initialState, action){
         case GET_EVENTS:
             return{
                 ...state,
-                items: [...action.payload, ...state.items]
+                items: [...action.payload, ...state.items],
+         
             };
         case JOIN_EVENT:
+            
         case GET_EVENT:
             return{
                 ...state,

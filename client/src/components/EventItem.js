@@ -5,6 +5,7 @@ import {CSSTransition, TransitionGroup } from 'react-transition-group';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {getEvents, deleteEvent, joinEvent} from '../actions/eventAction';
+import {clearErrors} from '../actions/errorActions';
 
 class EventItem extends Component {
     
@@ -32,18 +33,22 @@ class EventItem extends Component {
         clearErrors: PropTypes.func.isRequired
     }
     componentDidUpdate(prevProps){
+        
         const {error} = this.props;
         if(error != prevProps.error){
             //check for join event error
             if(error.id === 'JOIN_FAIL'){
                 this.setState({msg:error.msg.msg,
-                event:error.msg.event.event_name
+                event:{
+                    name: error.msg.event.event_name}
+
             });
             }else{
                 this.setState({msg:null  ,event:null})
             }
         }
      }
+
     render() {
         const { items } = this.props.item;
         return (
@@ -77,8 +82,10 @@ class EventItem extends Component {
                                     className="join-btn" 
                                     color ="danger" 
                                     onClick={this.onJoinClick.bind(this,_id)}
-                                    > Join</Button>
-                                {this.state.msg? (<Alert color='danger'>{this.state.msg} {this.state.event}</Alert>):null}                                          
+                                    > Join</Button> &nbsp;
+                                {(this.state.msg && (this.state.event.name === event_name) )? 
+                                (<Alert color='danger'>{this.state.msg} {this.state.event.name}</Alert>):
+                                null}                                          
                                 </ListGroupItem>
 
                             </CSSTransition>
@@ -104,5 +111,5 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(
-    mapStateToProps,{joinEvent})
+    mapStateToProps,{clearErrors,joinEvent})
     (EventItem);
