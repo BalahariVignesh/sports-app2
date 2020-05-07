@@ -127,4 +127,34 @@ router.post('/sign-in', (req, res) => {
 });
 
 
+
+
+// @route   POST api/users/editUser
+// @desc    edit user name and role type
+// @access  public
+
+router.post('/editUser', (req, res) => {
+    // const {errors, isValid} = validateSignup(req.body);
+   
+    // if(!isValid){
+    //     return res.status(400).json(errors);
+    // }
+   
+   User.findById(req.params.id)
+       .then(user => {
+           if(user){
+                user.findOneAndUpdate(
+                    {isOrganiser:!isOrganiser},
+                    
+                )
+            
+               
+           }
+           else{
+               msg = 'User does not Exist';
+                return res.status(400).json(msg);
+           }
+       })
+       .catch(error =>res.status(404).json(error));
+});
 module.exports = router;

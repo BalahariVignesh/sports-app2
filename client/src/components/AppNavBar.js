@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import RegisterModal from './auth/RegisterModal';
 import Logout from './auth/Logout';
 import LoginModal from './auth/LoginModal';
+import EditProfileModal from './EditProfileModal';
 
 class AppNavBar extends Component {
     state = {
@@ -43,6 +44,9 @@ class AppNavBar extends Component {
                     <span className="navbar-text mr-3">
                         <strong>{user?`Welcome ${user.name}`:``}</strong>
                     </span>
+                </NavItem>
+                <NavItem>
+                    <EditProfileModal/>
                 </NavItem>
                 <NavItem>
                      <Logout/>

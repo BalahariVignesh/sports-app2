@@ -116,3 +116,32 @@ export const tokenConfig = getState => {
     }
     return config;
 }
+
+
+
+
+export const editUser = ({ name, email, isOrganiser}) => dispatch => {
+    //headers
+    const config = {
+        headers:{
+            'Content-Type':'application/json'
+        }
+    }
+    //request body
+    const body = JSON.stringify({name, email, isOrganiser});
+    axios.post('/api/user/editUser', body, config)
+        .then(res => {
+            dispatch({
+            type:REGISTER_SUCCESS,
+            payload: res.data
+            });
+           
+        })
+        .catch(err=>{
+            dispatch(returnErrors(err.response.data, err.response.status,'EDIT_USER_FAIL'));
+            dispatch({
+                type:REGISTER_FAIL,
+
+            })
+        })
+}
