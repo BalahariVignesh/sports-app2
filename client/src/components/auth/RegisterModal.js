@@ -25,6 +25,7 @@ class RegisterModal extends Component{
         email:'',
         password:'',
         password2:'',
+        isOrganiser:'',
         msg:[]
     };
     
@@ -66,14 +67,15 @@ class RegisterModal extends Component{
 
     onSubmit = e => {
         e.preventDefault();
-        const {name, email, password, password2} = this.state;
+        const {name, email, password, password2,isOrganiser} = this.state;
 
         //create user object
         const newUser = {
             name, 
             email,
             password,
-            password2
+            password2,
+            isOrganiser
         };
         //attempting to register
         this.props.register(newUser);
@@ -143,6 +145,41 @@ class RegisterModal extends Component{
 
                                     </Input>
                                     {this.state.msg ? (<Alert color='danger'>{this.state.msg[3]}</Alert>):null}
+                                    
+                                        <Label for="organiser">
+                                            
+                                            <Input
+                                            type="radio"
+                                            name="isOrganiser"
+                                            id="organiser"
+                                            className="mb-3"
+                                            value='true'
+                                            onChange={this.onChange}
+                                            >
+                                            
+                                            </Input>
+                                            Organiser
+                                        </Label>
+                                       <br/>
+                                        
+                                    
+                                        <Label for="player">
+                                            
+                                            <Input
+                                            type="radio"
+                                            name="isOrganiser"
+                                            id="player"
+                                            className="mb-3"
+                                            value='false'
+                                            onChange={this.onChange}
+                                            >
+                                            
+                                            </Input>
+                                            Player
+                                        </Label>
+                                        
+                                    
+                                    
                                     <Button
                                     color ="dark"
                                     style={{marginTop:'2rem'}} block

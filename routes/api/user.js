@@ -46,7 +46,8 @@ router.get('/', (req, res) =>{
                 const newUser = new User({
                     name: req.body.name,
                     email: req.body.email,
-                    password: req.body.password
+                    password: req.body.password,
+                    isOrganiser: req.body.isOrganiser
                 });
                 
                            
@@ -69,7 +70,8 @@ router.get('/', (req, res) =>{
                                             user:{
                                                 id: user.id,
                                                 name: user.name,
-                                                email: user.email
+                                                email: user.email,
+                                                isOrganiser: user.isOrganiser
                                             }
                                         })
                                     }
@@ -102,7 +104,7 @@ router.post('/sign-in', (req, res) => {
             bcrypt.compare(password, user.password)
                 .then(isMatch => {
                     if(isMatch){
-                        const payload = {id: user.id, name: user.name};
+                        const payload = {id: user.id, name: user.name, isOrganiser: user.isOrganiser};
                         
                         jwt.sign(
                             payload,
