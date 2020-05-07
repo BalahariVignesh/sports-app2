@@ -69,6 +69,7 @@ class EventList extends Component{
     render() {
 
         const { items } = this.props.item;
+        //const {user} = this.props.auth;
        
         return(
             <Container>

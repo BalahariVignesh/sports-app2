@@ -14,7 +14,7 @@ import {connect} from 'react-redux';
 
 import {addEvent} from '../actions/eventAction';
 
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 
 
@@ -27,8 +27,14 @@ class EventModal extends Component{
         venue: '',
         additional_info:'',
         imageURL:'',
-        start: ''
+        start: '',
+        
 
+    }
+    static propTypes = {
+
+        auth: PropTypes.object.isRequired,
+        
     }
 
     toggle = () => {
@@ -63,13 +69,21 @@ class EventModal extends Component{
         this.toggle();//closing modal
     }
     render(){
-        return(
-            <div>
-                <Button
+        const{isAuthenticated, user} = this.props.auth;
+       
+        const isOrganiser = user?user.isOrganiser:'';
+
+        //add new event available only for organiser
+        const organiserLinks=(
+            <Button
                     color="dark"
                     style={{marginBottom: '2rem'}}
                     onClick={this.toggle}
-                >Add Item</Button>
+                >Add Event</Button>
+        );
+        return(
+            <div>
+               {isOrganiser?organiserLinks:null}
                 <Modal
                     isOpen={this.state.modal}
                     toggle = {this.toggle}
@@ -172,8 +186,9 @@ class EventModal extends Component{
 const mapStateToProps = state => ({
     // event_name : state.event_name,
     // venue :state.venue,
-
-    item :state.item
+    auth :state.auth,
+    item :state.item,
+   
 });
 
 export default connect(
