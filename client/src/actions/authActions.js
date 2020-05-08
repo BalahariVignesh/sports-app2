@@ -9,7 +9,8 @@ import {
     LOGOUT_SUCCESS,
     REGISTER_FAIL,
     REGISTER_SUCCESS,
-    GET_EVENTS
+    GET_EVENTS,
+    EDIT_SUCCESS
 
 } from "./types"
 
@@ -120,28 +121,22 @@ export const tokenConfig = getState => {
 
 
 
-export const editUser = ({ name, email, isOrganiser}) => dispatch => {
-    //headers
-    const config = {
-        headers:{
-            'Content-Type':'application/json'
-        }
-    }
-    //request body
-    const body = JSON.stringify({name, email, isOrganiser});
-    axios.post('/api/user/editUser', body, config)
+export const editUser = (user) => (dispatch,getState) => {
+    
+  
+   // const body = JSON.stringify({name, email, isOrganiser});
+    const body = user;
+    console.log(user);
+    axios.post('/api/user/editUser', body, tokenConfig(getState))
         .then(res => {
             dispatch({
-            type:REGISTER_SUCCESS,
+            type:EDIT_SUCCESS,
             payload: res.data
             });
            
         })
         .catch(err=>{
             dispatch(returnErrors(err.response.data, err.response.status,'EDIT_USER_FAIL'));
-            dispatch({
-                type:REGISTER_FAIL,
-
-            })
+            
         })
 }

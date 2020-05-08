@@ -140,21 +140,25 @@ router.post('/editUser', (req, res) => {
     //     return res.status(400).json(errors);
     // }
    
-   User.findById(req.params.id)
+   User.findById(req.body.id)
        .then(user => {
            if(user){
                 user.findOneAndUpdate(
-                    {isOrganiser:!isOrganiser},
+                    {name: req.body.name},
+                    {isOrganiser:req.body.isOrganiser},
                     
                 )
-            
+                res.status(200).json({
+                    msg: 'Success'
+                    
+                });
                
            }
            else{
                msg = 'User does not Exist';
-                return res.status(400).json(msg);
+                return res.status(400).json({msg:msg});
            }
        })
-       .catch(error =>res.status(404).json(error));
+       .catch(error =>res.status(404).json({msg:'figureout why'}));
 });
 module.exports = router;

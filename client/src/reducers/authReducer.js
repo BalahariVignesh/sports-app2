@@ -6,7 +6,8 @@ import {
     LOGIN_SUCCESS,
     LOGOUT_SUCCESS,
     REGISTER_FAIL,
-    REGISTER_SUCCESS
+    REGISTER_SUCCESS,
+    EDIT_SUCCESS
 
 } from "../actions/types"
 
@@ -14,7 +15,8 @@ const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
     isLoading: false,
-    user:null
+    user:null,
+    user_edit:null
 }
 
 export default function(state = initialState, action){
@@ -53,6 +55,11 @@ export default function(state = initialState, action){
                 user: null,
                 isAuthenticated:false,
                 isLoading:false
+            }
+        case EDIT_SUCCESS:
+            return{
+                ...state,
+                user_edit:action.payload
             }
         default:
             return state;

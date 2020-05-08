@@ -29,18 +29,21 @@ class EditProfileModal extends Component{
     static propTypes ={
         isAuthenticated:PropTypes.bool,
         error:PropTypes.object.isRequired,
-        login: PropTypes.func.isRequired,
+        auth:PropTypes.object.isRequired,
         clearErrors: PropTypes.func.isRequired
     }
 
     componentDidUpdate(prevProps){
-        const {error, isAuthenticated} = this.props;
+        const {error} = this.props;
         if(error != prevProps.error){
             //check for register error
-            if(error.id === 'LOGIN_FAIL'){
+            if(error.id === 'EDIT_USER_FAIL'){
                 this.setState({msg:[error.msg.msg]});
             }else{
                 this.setState({msg:null})
+                // if(this.state.modal){
+                //     this.toggle();
+                // }
             }
         }
         
@@ -68,15 +71,12 @@ class EditProfileModal extends Component{
             isOrganiser
         }
         //login attempt
+        console.log(user);
         this.props.editUser(user);
        //if submitted then close the modal
        if(this.state.modal){
-        //if(isAuthenticated){
-            //store.dispatch(getEvents());
             this.toggle();
-            
-       // }
-    }
+        }
 
  
     };
