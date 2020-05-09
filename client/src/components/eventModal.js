@@ -75,11 +75,16 @@ class EventModal extends Component{
 
         //add new event available only for organiser
         const organiserLinks=(
-            <Button
+            <div>
+                 <br/>
+                <Button
                     color="dark"
-                    style={{marginBottom: '2rem'}}
+                    style={{marginBottom: '2rem',marginLeft:"1.5%"}}
                     onClick={this.toggle}
-                >Add Event</Button>
+                > <i class="fa fa-plus"></i> Add Event</Button>
+            </div>
+           
+            
         );
         return(
             <div>
