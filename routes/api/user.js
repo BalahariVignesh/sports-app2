@@ -139,26 +139,36 @@ router.post('/editUser', (req, res) => {
     // if(!isValid){
     //     return res.status(400).json(errors);
     // }
-   
-   User.findById(req.body.id)
-       .then(user => {
-           if(user){
-                user.findOneAndUpdate(
-                    {name: req.body.name},
-                    {isOrganiser:req.body.isOrganiser},
+   User.updateOne({_id:req.body.id},{$set:{name:req.body.name,isOrganiser:req.body.isOrganiser}})
+    .then(updatemsg=>{
+        if(updatemsg.acknowledged){
+            res.status(200).json({msg:'success'});
+        }
+        else{
+            res.status(400).json({msg:'not updated'});
+        }
+        }
+        )
+        .catch(error =>res.status(404).json({msg:'figureout why'}));
+//    User.findById(req.body.id)
+//        .then(user => {
+//            if(user){
+//                 user.findOneAndUpdate(
+//                     {name: req.body.name},
+//                     {isOrganiser:req.body.isOrganiser},
                     
-                )
-                res.status(200).json({
-                    msg: 'Success'
+//                 )
+//                 res.status(200).json({
+//                     msg: 'Success'
                     
-                });
+//                 });
                
-           }
-           else{
-               msg = 'User does not Exist';
-                return res.status(400).json({msg:msg});
-           }
-       })
-       .catch(error =>res.status(404).json({msg:'figureout why'}));
-});
+//            }
+//            else{
+//                msg = 'User does not Exist';
+//                 return res.status(400).json({msg:msg});
+//            }
+//        })
+//        .catch(error =>res.status(404).json({msg:'figureout why'}));
+ });
 module.exports = router;
