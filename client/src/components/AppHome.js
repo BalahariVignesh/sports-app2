@@ -43,11 +43,11 @@ class AppNavBar extends Component {
             <Fragment>
                  <Col></Col>
                     <Col>                    
-                        <img className="logo-margin"src={require('./assets/logo.png')}/>
+                        <img className="logo-margin-afterlogin"src={require('./assets/logo.png')}/>
                     </Col>
                     <Col>
                     <Row><br/><br/><br/><br/><br/><br/><br/><br/><br/></Row>
-                    <div className="login-margin">
+                    <div className="login-margin-afterlogin">
                     <h2>
                             <strong>{user?`Welcome ${user.name} !!!`:``}</strong>
                         </h2>
