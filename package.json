@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node server.js",
     "client": "npm start --prefix client",
-    "build" : "npm run build --prod --prefix client",
+    "build": "npm run build --prod --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client \""
   },
   "author": "Balahari",
@@ -27,6 +27,8 @@
     "validator": "^13.0.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.1.2",
     "nodemon": "^2.0.3"
   }
 }
