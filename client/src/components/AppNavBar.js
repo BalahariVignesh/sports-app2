@@ -67,15 +67,16 @@ class AppNavBar extends Component {
         );
 
         return(
-            <div>
-            <Navbar color="dark" dark expand="sm" className="mb-5">
-                <Container>
-                    <NavbarBrand href ="/">Sportify</NavbarBrand>
+            <div className="page-body-image">
+            <Navbar color="light" dark expand="sm" className="mb-5">
+                    <NavbarBrand href ="/">
+                        <img src={require('./assets/logo.png')} style={{width:"120px"}}/>
+                    </NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             
-                            <NavItem>
+                            {/* <NavItem>
                                 <NavLink > Events</NavLink>
                             </NavItem>
                             <NavItem>
@@ -83,12 +84,11 @@ class AppNavBar extends Component {
                             </NavItem>
                             <NavItem>
                                 <NavLink > Contact us!</NavLink>
-                            </NavItem>
+                            </NavItem> */}
                             {isAuthenticated? authLinks:guestLinks}
                           
                         </Nav>
                     </Collapse>
-                </Container>
             </Navbar>
         </div>
         );

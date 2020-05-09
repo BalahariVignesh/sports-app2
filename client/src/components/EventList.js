@@ -73,7 +73,7 @@ class EventList extends Component{
        
         return(
             <Container>
-               
+               <br/>
                 <ListGroup>
                
                    <EventItem items= {items}/>

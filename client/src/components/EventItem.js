@@ -1,5 +1,5 @@
 
-import { ListGroupItem, Button, Alert } from 'reactstrap';
+import { ListGroupItem, Button, Alert,Col, Row, Label } from 'reactstrap';
 import React, { Component } from 'react';
 import {CSSTransition, TransitionGroup } from 'react-transition-group';
 import {connect} from 'react-redux';
@@ -81,42 +81,54 @@ class EventItem extends Component {
         return (
             <div>
                  <TransitionGroup className="event-list">
+                 
                         {items && items.map(({_id, event_name,sport_type,players_required,venue,additional_info,imageURL,start}) =>
                             <CSSTransition key={_id} timeout={500} classNames="fade">
-                          
-                                <ListGroupItem>
-                                    {event_name}
-                                    <br/>
-                                    {sport_type}
-                                    <br/>
-                                    {players_required}
-                                    <br/>
-                                    {venue}
-                                    <br/>
-                                    {additional_info}
-                                    <br/>
-                                    {imageURL}
-                                    <br/>
-                                    {start}
-                                    <br/>
-                                    <Button 
-                                    className="join-btn" 
-                                    color ="danger" 
-                                    
-                                    onClick={this.onDeleteClick.bind(this,_id)}
-                                    > Delete</Button>
-                                    <Button 
-                                    className="join-btn" 
-                                    color ="danger" 
-                                    onClick={this.onJoinClick.bind(this,_id)}
-                                    > Join</Button> &nbsp;
-                                {(this.state.msg && (this.state.event.name === event_name) )? 
-                                (<Alert color='danger'>{this.state.msg} {this.state.event.name}</Alert>):
-                                null}                                          
-                                </ListGroupItem>
+                                
 
+
+                                <ListGroupItem style={{marginBottom:"2%"}}>
+                                    <Row>
+                                        <Col>
+                                            <img src={imageURL} style={{width:"80%"}} />
+                                        </Col>
+                                        <Col>
+                                                <h2>{event_name}</h2>
+                                                <br/>
+                                                <Label><strong> Sports Type :</strong></Label>{sport_type}
+                                                <br/>
+                                                <Label><strong> Players Required :</strong></Label>{players_required}
+                                                <br/>
+                                                <Label><strong> Venue :</strong></Label>{venue}
+                                                <br/>
+                                                <Label><strong> Additional Info :</strong></Label>{additional_info}
+                                                <br/>
+                                                <Label><strong> Date :</strong></Label>{start}
+                                                <br/>
+                                                <Button 
+                                                className="join-btn" 
+                                                color ="danger" 
+                                                
+                                                onClick={this.onDeleteClick.bind(this,_id)}
+                                                > <i class="fa fa-trash"></i>&nbsp;Delete</Button>
+                                                <Button 
+                                                className="join-btn" 
+                                                color ="danger" 
+                                                onClick={this.onJoinClick.bind(this,_id)}
+                                                > <i class="fa fa-user-plus"></i> Join</Button> &nbsp;
+                                            {(this.state.msg && (this.state.event.name === event_name) )? 
+                                            (<Alert color='danger'>{this.state.msg} {this.state.event.name}</Alert>):
+                                            null}                         
+                                        </Col>
+                                    </Row>
+                                    
+                                    
+                                                     
+                                </ListGroupItem>
+                                    
                             </CSSTransition>
                         )}
+                        
                     </TransitionGroup>
                     
             </div>
