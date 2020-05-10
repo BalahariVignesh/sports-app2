@@ -76,6 +76,7 @@ class EditProfileModal extends Component{
        //if submitted then close the modal
        if(this.state.modal){
             this.toggle();
+            window.location.reload();
         }
 
  

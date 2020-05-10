@@ -133,6 +133,7 @@ export const editUser = (user) => (dispatch,getState) => {
             type:EDIT_SUCCESS,
             payload: res.data
             });
+         
            
         })
         .catch(err=>{
