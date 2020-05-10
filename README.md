@@ -14,4 +14,6 @@ npm run test
 You can find docker at: https://hub.docker.com/repository/docker/balahari/sportify
 
 Sportify Build workflow to build and upload image to dockerhub
+
 Video is being processed in youtube, will share the link here below:
+https://www.youtube.com/watch?v=I4tF22qvcXQ
