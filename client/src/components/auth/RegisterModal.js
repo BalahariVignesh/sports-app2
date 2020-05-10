@@ -41,7 +41,7 @@ class RegisterModal extends Component{
         if(error != prevProps.error){
             //check for register error
             if(error.id === 'REGISTER_FAIL'){
-                this.setState({msg: [error.msg.name, error.msg.email, error.msg.password, error.msg.password2]});
+                this.setState({msg: [error.msg.name, error.msg.email, error.msg.password, error.msg.password2, error.msg.isOrganiser]});
             }else{
                 this.setState({msg:null})
             }
@@ -93,7 +93,7 @@ class RegisterModal extends Component{
                 >
                     <ModalHeader toggle={this.toggle}> Register</ModalHeader>
                     <ModalBody>
-                        {this.state.msg ? (<Alert color='danger'>{this.state.msg}</Alert>):null}
+                        {/* {this.state.msg ? (<Alert color='danger'>{this.state.msg}</Alert>):null} */}
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup>
                                 <Label for="name">Name</Label>
@@ -178,7 +178,7 @@ class RegisterModal extends Component{
                                             Player
                                         </Label>
                                         
-                                   
+                                        {this.state.msg ? (<Alert color='danger'>{this.state.msg[4]}</Alert>):null}
                                     
                                     <Button
                                     color ="dark"

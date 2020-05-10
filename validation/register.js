@@ -40,6 +40,10 @@ module.exports = function validateSignup(data){
     if(!Validator.equals(data.password, data.password2)){
         errors.password2 = 'Passwords must match';
     }
+
+    if(Validator.isEmpty(data.isOrganiser)){
+        errors.isOrganiser = 'Please choose a role';
+    }
     
     return {
         errors,
