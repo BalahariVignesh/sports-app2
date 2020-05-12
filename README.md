@@ -17,3 +17,4 @@ Sportify Build workflow to build and upload image to dockerhub
 
 Video is being processed in youtube, will share the link here below:
 https://www.youtube.com/watch?v=I4tF22qvcXQ
+Please NOTE: This project requires an active internet connection to work as it uses MongoDB atlas Cloud.
